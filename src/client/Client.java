@@ -1,5 +1,8 @@
 package client;
 
+import communication.Message;
+import communication.MessageType;
+import org.codehaus.jackson.map.ObjectMapper;
 import utils.Log;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,9 +11,24 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Client{
-    public void start(int myNumber){
+    private int uId;
+    private int divId;
+    private int vendorId;
+    private MessageType messageType;
+
+    public Client(){
+
+    }
+
+    public Client(int uId, int divId, int vendorId, MessageType messageType){
+        this.uId = uId;
+        this.divId = divId;
+        this.vendorId = vendorId;
+        this.messageType = messageType;
+    }
+
+    public void start(){
         Log.e("chat started");
-        int userNumber = myNumber;
 
         BufferedReader user = new BufferedReader(new InputStreamReader(System.in));
         Socket socket;
@@ -19,10 +37,20 @@ public class Client{
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             ReceiveThread rt = new ReceiveThread(socket);
             rt.start();
+            final ObjectMapper objectMapper = new ObjectMapper();
             while(true) {
-                final String msg = "{\"msg\":\"" + user.readLine() + "\"}";
-                out.println(msg);
-                Log.i(msg);
+                final Message message = new Message();
+                message.setUid(Integer.toString(this.uId));
+
+                message.setType(this.messageType);
+                final String msg = user.readLine();
+
+                if(msg.equals("###")) message.setType(MessageType.EXIT);
+
+                message.setMessage(msg);
+
+                out.println(objectMapper.writeValueAsString(message));
+                Log.i(objectMapper.writeValueAsString(message));
             }
         }
         catch (IOException e){

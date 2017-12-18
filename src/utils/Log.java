@@ -23,19 +23,19 @@ public class Log {
     }
 
     public static void e(Object msg){
-        System.err.println(logPrefix(ERR) + msg.toString());
+        System.err.println(logPrefix(ERR) + msg);
     }
 
     public static void i(Object msg){
-        System.out.println(logPrefix(INFO) + msg.toString());
+        System.out.println(logPrefix(INFO) + msg);
     }
 
     public static void e(String tag, Object msg){
-        System.err.println(logPrefix(ERR) + "[" + tag + "] " + msg.toString());
+        System.err.println(logPrefix(ERR) + "[" + tag + "] " + msg);
     }
 
     public static void i(String tag, Object msg){
-        System.out.println(logPrefix(INFO) + "[" + tag + "] " + msg.toString());
+        System.out.println(logPrefix(INFO) + "[" + tag + "] " + msg);
     }
 
     private static String logPrefix(String prefix){

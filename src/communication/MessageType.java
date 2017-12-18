@@ -49,6 +49,30 @@ public enum MessageType {
         public int code() {
             return 6;
         }
+    },
+    EXIT{
+        @Override
+        public int code() {
+            return 7;
+        }
+    },
+    DESTROY{
+        @Override
+        public int code() {
+            return 8;
+        }
+    },
+    INVITE{
+        @Override
+        public int code() {
+            return 9;
+        }
+    },
+    EXPEL{
+        @Override
+        public int code() {
+            return 10;
+        }
     };
 
     public abstract int code();

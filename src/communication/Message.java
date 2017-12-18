@@ -1,10 +1,12 @@
 package communication;
 
+import java.util.List;
+
 public class Message {
 
     private String uid;
     private String message;
-    private MessageType type;
+    private MessageType type = MessageType.TEXT;
     private String path;
 
     private long lat;
@@ -16,6 +18,11 @@ public class Message {
     private String divId;
     private String vendorId;
 
+    /**
+     * The single uid and multiple uids to apply a specific action when the message type is EXIT/DESTROY/INVITE/EXPEL.
+     */
+    private List<String> applyOns;
+
     public Message(){
 
     }
@@ -23,6 +30,14 @@ public class Message {
     public Message(String divId, String vendorId) {
         this.divId = divId;
         this.vendorId = vendorId;
+    }
+
+    public List<String> getApplyOns() {
+        return applyOns;
+    }
+
+    public void setApplyOns(List<String> applyOns) {
+        this.applyOns = applyOns;
     }
 
     public String getDivId() {
@@ -118,6 +133,7 @@ public class Message {
                 ", timestamp=" + timestamp +
                 ", divId='" + divId + '\'' +
                 ", vendorId='" + vendorId + '\'' +
+                ", applyOns=" + applyOns +
                 '}';
     }
 }
